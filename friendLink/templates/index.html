@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% block content %}
+{#  头像  #}
+    <div class="mdui-row mdui-m-t-5 mdui-m-b-3 mdui-m-t-3">
+        <div class="mdui-center" style="width: 100px;">
+            <img alt="avatar" class="mdui-img-fluid mdui-img-circle" src={{ url_for('static',filename='avatar.jpg') }}>
+        </div>
+    </div>
+{#  标题  #}
+    <h1 style="text-align: center" class="mdui-m-b-2 mdui-text-color-blue-900"><b>达芬奇の左邻右舍</b></h1>
+{#  说明  #}
+    <div class="mdui-row mdui-m-b-5 mdui-text-color-blue-grey">
+        <div class="mdui-col-xs-0 mdui-col-sm-4"></div>
+        <div class="mdui-col-xs-12 mdui-col-sm-4">
+            <div class="mdui-divider mdui-m-b-2"></div>
+            <p class="mdui-m-b-2 mdui-text-color-blue-grey" style="font-weight: 300;">
+                嗨嗨~这里是Davinci的友人帐哦ヾ(^▽^*)))~<br>
+                请想要交换友链的小伙伴根据下面的格式给我留言嗷！<br><br>
+                <i class="mdui-icon material-icons">&#xe838;</i> Name：Davinci<br>
+                <i class="mdui-icon material-icons">&#xe88a;</i> Bio：<a class="mdui-text-color-pink" href="davicnievans.top" target="_blank">Davinci的红茶馆</a><br>
+                <i class="mdui-icon material-icons">&#xe866;</i> Motto：今天还要继续努力哦！嘿咻~<br>
+                <i class="mdui-icon material-icons">&#xe7fd;</i> Avatar：<a class="mdui-text-color-pink" href="http://gallery.davincievans.top/images/2020/02/04/a43bfc8c52ef8134a7ecce3ae5e0262d_2_3_art.jpg" target="_blank">Click!</a>（至少256 * 256)<br>
+                <i class="mdui-icon material-icons">&#xe0be;</i> E-mail：zhouningsiyuan@foxmail.com<br><br>
+                谢谢资瓷(。・∀・)ノ
+            </p>
+            <div class="mdui-divider mdui-m-b-4"></div>
+        </div>
+    </div>
+    <div class="mdui-container mdui-p-l-5 mdui-p-r-5">
+    <div class="mdui-row-sm-4 mdui-row-xs-2 mdui-row-xl-6">
+    {% for friend in friendList %}
+        <div class="mdui-col mdui-m-b-3 mdui-p-l-0 mdui-p-r-0">
+        <div class="mdui-col-xs-1 "></div>
+            <a target="_blank" href={{ friend["link"] }}>
+        <div class="mdui-card mdui-col-xs-10 mdui-hoverable mdui-p-l-0 mdui-p-r-0" style="border-radius: 5px">
+            <div class="mdui-card-media avatarDiv">
+                <img alt="avatar" class="mdui-img-fluid avatar" src={{ friend["avatar"] }}>
+            </div>
+                <div class="mdui-card-primary mdui-p-t-1 mdui-p-b-2 mdui-p-l-1 mdui-p-r-1">
+                    <div class="mdui-card-primary-title mdui-text-truncate"><small><small>{{ friend["name"] }}</small></small></div>
+                    <div class="mdui-card-primary-subtitle mdui-text-truncate"><small>{{ friend["motto"] }}</small></div>
+
+                </div>
+
+        </div></a>
+        </div>
+    {% endfor %}
+    </div>
+    </div>
+{% endblock %}
