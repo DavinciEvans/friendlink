@@ -1,40 +1,24 @@
-from flask import Flask, render_template, url_for
+import os
+import sys
+from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
+from flask_login import LoginManager
 
 app = Flask(__name__)
-app.config["SERVER_NAME"] = "127.0.0.1:5000"
 db = SQLAlchemy(app)
-
-@app.route('/')
-def index():
-    friendList = [
-        {
-            'avatar': url_for('static', filename='avatar1.jpg'),
-            'name': "蝉时雨",
-            'motto': "蝉鸣如雨，花落道中",
-            'link': "https://chanshiyu.com/"
-        },
-        {
-            'avatar': url_for('static', filename='avatar2.jpg'),
-            'name': "Mashiro",
-            'motto': "提供主题的作者大大！",
-            'link': "https://2heng.xin/"
-        },
-        {
-            'avatar': url_for('static', filename='avatar3.jpg'),
-            'name': "小透明・宸",
-            'motto': " 存在感满满的好孩子(´•ω•`)",
-            'link': "https://akarin.dev/"
-        },
-        {
-            'avatar': url_for('static', filename='avatar4.jpg'),
-            'name': "imByteCat",
-            'motto': "身边某个dalao(๑•̀ㅂ•́)و✧",
-            'link': "https://2forest.cn/"
-        }
-    ]
-    return render_template('index.html',friendList=friendList)
+login_manager = LoginManager(app)
 
 
+WIN = sys.platform.startswith('win')  # 检测是否为windows
+if WIN:  # 如果是 Windows 系统，使用三个斜线
+    prefix = 'sqlite:///'
+else:  # 否则使用四个斜线
+    prefix = 'sqlite:////'
+app.config['SQLALCHEMY_DATABASE_URI'] = prefix + os.path.join(os.path.dirname(app.root_path), os.getenv('DATABASE_FILE', 'data.db'))
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False  # 关闭对模型修改的监控，提高性能，官方推荐关闭
+app.config['SECRET_KEY'] = os.getenv('SECRET_KEY', 'dev')
+
+
+from friendLink import command, view
 if __name__ == '__main__':
     app.run()
