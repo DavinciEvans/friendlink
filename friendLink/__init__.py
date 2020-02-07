@@ -8,8 +8,23 @@ from flask_login import LoginManager
 app = Flask(__name__)
 db = SQLAlchemy(app)
 login_manager = LoginManager(app)
-
 login_manager.login_view = 'login'
+
+
+@app.context_processor  # 该函数可以用于设置一个全局变量，里面的东西会在任意模板中生效
+def inject_user():  # 函数名可以随意修改
+    from friendLink.model import User
+    user = User.query.first()
+    return dict(user=user)  # 需要返回字典，等同于return {'user': user}
+
+
+@app.context_processor  # 该函数可以用于设置一个全局变量，里面的东西会在任意模板中生效
+def inject_user():  # 函数名可以随意修改
+    from friendLink.model import User
+    user = User.query.first()
+    return dict(user=user)  # 需要返回字典，等同于return {'user': user}
+
+
 WIN = sys.platform.startswith('win')  # 检测是否为windows
 if WIN:  # 如果是 Windows 系统，使用三个斜线
     prefix = 'sqlite:///'

@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1 class="mdui-m-b-2 mdui-text-color-blue-900"><b>管理员登录</b></h1>
+
+<div class="mdui-divider"></div>
+<div class="mdui-row">
+<div class="mdui-col-xs-12 mdui-col-sm-4">
+<form method="post">
+{{ form.csrf_token }}
+<div class="mdui-textfield">
+    {{ form.username.label(class="mdui-textfield-label") }}{{ form.username(class="mdui-textfield-input") }}<br>
+</div>
+{{ form.password.label(class="mdui-textfield-label") }}{{ form.password(class="mdui-textfield-input") }}<br>
+{{ form.submit(class="mdui-btn mdui-color-theme-accent mdui-ripple mdui-m-b-5") }}<br>
+</form>
+</div>
+</div>
+{% endblock %}
