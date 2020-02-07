@@ -4,11 +4,12 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 
+
 app = Flask(__name__)
 db = SQLAlchemy(app)
 login_manager = LoginManager(app)
 
-
+login_manager.login_view = 'login'
 WIN = sys.platform.startswith('win')  # 检测是否为windows
 if WIN:  # 如果是 Windows 系统，使用三个斜线
     prefix = 'sqlite:///'
@@ -19,6 +20,6 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False  # 关闭对模型修改的
 app.config['SECRET_KEY'] = os.getenv('SECRET_KEY', 'dev')
 
 
-from friendLink import command, view
+from friendLink import command, view, form
 if __name__ == '__main__':
     app.run()

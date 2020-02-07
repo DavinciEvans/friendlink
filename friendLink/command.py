@@ -2,6 +2,26 @@ import click
 from friendLink import app, db
 from friendLink.model import User,Friend
 
+
+@app.cli.command()
+@click.option('--username', prompt=True, help="set Username to login")
+@click.option('--password', prompt=True, hide_input=True, confirmation_prompt=True, help="password used to login")
+def admin(username, password):  # 管理员注册或修改号码
+    db.create_all()
+
+    user = User.query.first()
+    if user is not None:
+        click.echo('Updating user...')
+        user.username = username
+        user.set_password(password)
+    else:
+        click.echo('Create user...')
+        user = User(username=username, name='Admin')
+        user.set_password(password)
+        db.session.add(user)
+    db.session.commit()
+
+
 @app.cli.command()
 @click.option('--drop', is_flag=True, help="Create after drop")
 def initdb(drop):  # 数据库初始化
