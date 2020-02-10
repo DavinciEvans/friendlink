@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1 class="mdui-m-b-2 mdui-text-color-blue-900"><b>友链信息修改</b></h1>
+
+<div class="mdui-divider"></div>
+<div class="mdui-row">
+<div class="mdui-col-xs-12 mdui-col-sm-4">
+    <form method="post" enctype="multipart/form-data">
+    {{ form.csrf_token }}
+        <div class="mdui-textfield">
+        {{ form.avatar.label(class="mdui-textfield-label") }}{{ form.avatar(accept=".jpg, .jpeg, .png, .webp, .gif", style="display: None;") }}
+        <button type="button" class="mdui-btn mdui-color-theme-accent mdui-ripple" onclick="document.getElementById('avatar').click()">修改头像</button>
+        </div>
+    <div class="mdui-textfield">
+        {% set name_value = friend.name %}
+        {% set motto_value = friend.motto %}
+        {{ form.name.label(class="mdui-textfield-label") }}{{ form.name(class="mdui-textfield-input", value=name_value) }}<br></div>
+    <div class="mdui-textfield">
+    {{ form.motto.label(class="mdui-textfield-label") }}{{ form.motto(class="mdui-textfield-input", value=motto_value) }}<br></div>
+    {{ form.submit(class="mdui-btn mdui-color-theme-accent mdui-ripple mdui-m-b-5") }}<br>
+    </form>
+</div>
+</div>
+{% endblock %}

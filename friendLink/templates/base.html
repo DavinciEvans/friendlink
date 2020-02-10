@@ -18,18 +18,18 @@
 <div id="web_bg"></div>
 {#导航栏#}
 <div class="mdui-toolbar mdui-color-theme mdui-shadow-7 mdui-m-b-2" style="height: 72px;">
-    <span class="mdui-typo-title" style="color: white;"><i class="mdui-icon material-icons">&#xe866;</i> 达芬奇の左邻右舍</span>
+    <span class="mdui-typo-title" style="color: white;"><a style="color: white;text-decoration: none;" href={{ url_for("index") }}><i class="mdui-icon material-icons">&#xe866;</i> 达芬奇の左邻右舍</a></span>
     <div class="mdui-toolbar-spacer"></div>
-{#    <a class="mdui-btn mdui-btn-icon"  mdui-tooltip="{content: '首页'}" href={{ url_for('index') }} ><i class="mdui-icon material-icons">home</i></a>#}
-{#    {% if not current_user.is_authenticated %}#}
-{#    <a class="mdui-btn mdui-btn-icon" mdui-tooltip="{content: '登录'}" href={{ url_for('login') }}>#}
-{#        <i class="mdui-icon material-icons">person</i></a>#}
-{#    {% else %}#}
-{#    <a class="mdui-btn mdui-btn-icon" mdui-tooltip="{content: '设置'}" href={{ url_for('settings') }}>#}
-{#        <i class="mdui-icon material-icons">settings</i></a>#}
-{#    <a class="mdui-btn mdui-btn-icon" mdui-tooltip="{content: '登出'}" onclick="return confirm('确定要退出吗？')" href={{ url_for('logout') }}>#}
-{#        <i class="mdui-icon material-icons">exit_to_app</i></a>#}
-{#    {% endif %}#}
+    <a class="mdui-btn mdui-btn-icon" style="color: white;"  mdui-tooltip="{content: '首页'}" href={{ url_for('index') }} ><i class="mdui-icon material-icons">home</i></a>
+    {% if not current_user.is_authenticated %}
+    <a class="mdui-btn mdui-btn-icon" style="color: white;" mdui-tooltip="{content: '登录'}" href={{ url_for('login') }}>
+        <i class="mdui-icon material-icons">person</i></a>
+    {% else %}
+    <a class="mdui-btn mdui-btn-icon" style="color: white;" mdui-tooltip="{content: '设置'}" href={{ url_for('settings') }}>
+        <i class="mdui-icon material-icons">settings</i></a>
+    <a class="mdui-btn mdui-btn-icon" style="color: white;" mdui-tooltip="{content: '登出'}" onclick="return confirm('确定要退出吗？')" href={{ url_for('logout') }}>
+        <i class="mdui-icon material-icons">exit_to_app</i></a>
+    {% endif %}
     <a href="https://github.com/DavinciEvans" mdui-tooltip="{content: 'Github'}" class="mdui-btn mdui-btn-icon"><svg version="1.1" id="Layer_1"
                                                                                   xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
                                                                                   viewBox="0 0 36 36" enable-background="new 0 0 36 36" xml:space="preserve" class="mdui-icon"
@@ -55,5 +55,10 @@
     {% block content %}
     {% endblock %}
 </div>
+<!-- jQuery (Bootstrap 的 JavaScript 插件需要引入 jQuery) -->
+    <script src="https://cdn.bootcss.com/jquery/2.1.1/jquery.min.js"></script>
+<!-- 包括所有已编译的插件 -->
+    <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="//www.mdui.org/source/dist/js/mdui.min.js"></script>
 </body>
 </html>

@@ -19,8 +19,8 @@
                 <i class="mdui-icon material-icons">&#xe838;</i> Name：Davinci<br>
                 <i class="mdui-icon material-icons">&#xe88a;</i> Bio：<a class="mdui-text-color-pink" href="davicnievans.top" target="_blank">Davinci的红茶馆</a><br>
                 <i class="mdui-icon material-icons">&#xe866;</i> Motto：今天还要继续努力哦！嘿咻~<br>
-                <i class="mdui-icon material-icons">&#xe7fd;</i> Avatar：<a class="mdui-text-color-pink" href="http://gallery.davincievans.top/images/2020/02/04/a43bfc8c52ef8134a7ecce3ae5e0262d_2_3_art.jpg" target="_blank">Click!</a>（至少256 * 256)<br>
-                <i class="mdui-icon material-icons">&#xe0be;</i> E-mail：zhouningsiyuan@foxmail.com<br><br>
+                <i class="mdui-icon material-icons">&#xe7fd;</i> Avatar：<a class="mdui-text-color-pink" href="http://gallery.davincievans.top/images/2020/02/04/a43bfc8c52ef8134a7ecce3ae5e0262d_2_3_art.jpg" target="_blank">Click!</a>（至少256 * 256，最大5M)<br>
+                <i class="mdui-icon material-icons">&#xe0be;</i> E-mail：me@davincievans.top<br><br>
                 谢谢资瓷(。・∀・)ノ
             </p>
             <div class="mdui-divider mdui-m-b-4"></div>
@@ -31,18 +31,28 @@
     {% for friend in friendList %}
         <div class="mdui-col mdui-m-b-3 mdui-p-l-0 mdui-p-r-0">
         <div class="mdui-col-xs-1 "></div>
-            <a target="_blank" href={{ friend["link"] }}>
+
         <div class="mdui-card mdui-col-xs-10 mdui-hoverable mdui-p-l-0 mdui-p-r-0" style="border-radius: 5px">
+        <a target="_blank" href={{ friend["link"] }}>
             <div class="mdui-card-media avatarDiv">
                 <img alt="avatar" class="mdui-img-fluid avatar" src={{ friend["avatar"] }}>
+            </div></a>
+            <div class="mdui-card-primary mdui-p-t-1 mdui-p-b-2 mdui-p-l-1 mdui-p-r-1">
+                <div class="mdui-card-primary-title mdui-text-truncate"><small><small>{{ friend["name"] }}</small></small></div>
+                <div class="mdui-card-primary-subtitle mdui-text-truncate"><small>{{ friend["motto"] }}</small></div>
             </div>
-                <div class="mdui-card-primary mdui-p-t-1 mdui-p-b-2 mdui-p-l-1 mdui-p-r-1">
-                    <div class="mdui-card-primary-title mdui-text-truncate"><small><small>{{ friend["name"] }}</small></small></div>
-                    <div class="mdui-card-primary-subtitle mdui-text-truncate"><small>{{ friend["motto"] }}</small></div>
 
-                </div>
+            {% if current_user.is_authenticated  %}
+            <div class="mdui-card-actions">
+            <form method="get"  style="display: inline;" action={{ url_for("edit", id=friend.id) }}>
+                <button type="submit" name="edit" value="edit" class="mdui-btn mdui-ripple mdui-color-theme-accent">EDIT</button></form>
+            <form method="post" style="display: inline" action={{ url_for("delete", id=friend.id) }}>
+                <button onclick="return confirm('确定删除？')" class="mdui-btn mdui-btn-icon mdui-float-right" type="submit" name="delete" value="Delete">
+                    <i class="mdui-icon material-icons">&#xe872;</i></button></form>
+            </div>
+            {% endif %}
+        </div>
 
-        </div></a>
         </div>
     {% endfor %}
     </div>
