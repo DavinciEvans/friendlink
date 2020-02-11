@@ -1,11 +1,12 @@
 from friendLink import app, db
 from friendLink.model import User, Friend
 from flask import render_template, url_for, flash, redirect, send_from_directory
-from friendLink.form import LoginForm, SettingsForm, EditForm
+from friendLink.form import *
 from flask_login import login_user, login_required, logout_user
+import os
 
 
-@app.route('/')
+@app.route('/', methods=['GET'])
 def index():
     friendList = Friend.query.all()
     return render_template('index.html',friendList=friendList)
@@ -56,13 +57,6 @@ def logout():
 @app.route("/edit/<int:id>", methods=['GET','POST'])
 @login_required
 def edit(id):
-    import os
-    def random_name(filename):
-        import uuid
-        ext = os.path.splitext(filename)[1]
-        new_name = uuid.uuid4().hex + ext
-        return new_name
-
     form = EditForm()
     friend = Friend.query.get_or_404(id)
     if form.validate_on_submit():
@@ -93,6 +87,34 @@ def delete(id):
     return redirect(url_for("index"))
 
 
+@app.route("/add",methods=['GET','POST'])
+@login_required
+def add():
+    form = AddForm()
+    if form.validate_on_submit():
+        avatar = form.avatar.data
+        name = form.name.data
+        motto = form.motto.data
+        filename = random_name(avatar.filename)
+        avatar_path = os.path.join(app.config['UPLOAD_PATH'], filename)
+        avatar.save(avatar_path)
+        avatar_url = url_for("get_file", filename=filename)
+        new_friend = Friend(avatar=avatar_url,name=name,motto=motto)
+        db.session.add(new_friend)
+        db.session.commit()
+        flash("成功添加新朋友！")
+        return redirect(url_for("index"))
+    return render_template("add.html",form=form)
+
+
 @app.route("/uploads/<path:filename>")
 def get_file(filename):
     return send_from_directory(app.config['UPLOAD_PATH'], filename)
+
+
+
+def random_name(filename):
+    import uuid
+    ext = os.path.splitext(filename)[1]
+    new_name = uuid.uuid4().hex + ext
+    return new_name

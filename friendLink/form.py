@@ -21,3 +21,10 @@ class EditForm(FlaskForm):
     name = StringField('Name', validators=[DataRequired(), Length(1, 60)])
     motto = StringField('Motto', validators=[DataRequired(), Length(1, 60)])
     submit = SubmitField("Submit")
+
+
+class AddForm(FlaskForm):
+    avatar = FileField('Avatar', validators=[FileRequired(), FileAllowed(['jpg', 'jpeg', 'png', 'webp', 'gif'])])
+    name = StringField('Name', validators=[DataRequired(), Length(1, 60)])
+    motto = StringField('Motto', validators=[DataRequired(), Length(1, 60)])
+    submit = SubmitField("Submit")

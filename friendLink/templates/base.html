@@ -20,7 +20,7 @@
 <div class="mdui-toolbar mdui-color-theme mdui-shadow-7 mdui-m-b-2" style="height: 72px;">
     <span class="mdui-typo-title" style="color: white;"><a style="color: white;text-decoration: none;" href={{ url_for("index") }}><i class="mdui-icon material-icons">&#xe866;</i> 达芬奇の左邻右舍</a></span>
     <div class="mdui-toolbar-spacer"></div>
-    <a class="mdui-btn mdui-btn-icon" style="color: white;"  mdui-tooltip="{content: '首页'}" href={{ url_for('index') }} ><i class="mdui-icon material-icons">home</i></a>
+    <a class="mdui-btn mdui-btn-icon" style="color: white;"  mdui-tooltip="{content: '首页'}" href="https://davincievans.top" ><i class="mdui-icon material-icons">home</i></a>
     {% if not current_user.is_authenticated %}
     <a class="mdui-btn mdui-btn-icon" style="color: white;" mdui-tooltip="{content: '登录'}" href={{ url_for('login') }}>
         <i class="mdui-icon material-icons">person</i></a>
@@ -43,7 +43,7 @@
     </svg></a>
 </div>
 {#主内容#}
-<div class="mdui-container content mdui-p-t-1 mdui-m-t-3 mdui-p-l-4 mdui-p-r-4 mdui-m-b-5">
+<div class="mdui-container content mdui-p-t-1 mdui-m-t-3 mdui-p-l-4 mdui-p-r-4 mdui-m-b-5" id="main" style="display: none">
 {#flash提示#}
     {% for message in get_flashed_messages() %}
         <div class="alert alert-success alert-dismissable mdui-m-t-1">
@@ -60,5 +60,12 @@
 <!-- 包括所有已编译的插件 -->
     <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="//www.mdui.org/source/dist/js/mdui.min.js"></script>
+    <script src="https://cdn.bootcss.com/jquery/2.1.1/jquery.min.js"></script>
+        <script>
+            $(function () {
+                    $('#main').fadeIn(1000);
+                    $('#friendlist').fadeIn(2500);
+            })
+        </script>
 </body>
 </html>

@@ -14,7 +14,7 @@
         <div class="mdui-col-xs-12 mdui-col-sm-4">
             <div class="mdui-divider mdui-m-b-2"></div>
             <p class="mdui-m-b-2 mdui-text-color-blue-grey" style="font-weight: 300;">
-                嗨嗨~这里是Davinci的友人帐哦ヾ(^▽^*)))~<br>
+                嗨嗨~这里是Davinci哦ヾ(^▽^*)))~<br>
                 请想要交换友链的小伙伴根据下面的格式给我留言嗷！<br><br>
                 <i class="mdui-icon material-icons">&#xe838;</i> Name：Davinci<br>
                 <i class="mdui-icon material-icons">&#xe88a;</i> Bio：<a class="mdui-text-color-pink" href="davicnievans.top" target="_blank">Davinci的红茶馆</a><br>
@@ -26,12 +26,11 @@
             <div class="mdui-divider mdui-m-b-4"></div>
         </div>
     </div>
-    <div class="mdui-container mdui-p-l-0 mdui-p-r-0">
+    <div class="mdui-container mdui-p-l-0 mdui-p-r-0" id="friendlist" style="display: none">
     <div class="mdui-row-sm-4 mdui-row-xs-1">
     {% for friend in friendList %}
         <div class="mdui-col mdui-m-b-3 mdui-p-l-0 mdui-p-r-0">
         <div class="mdui-col-xs-1 "></div>
-
         <div class="mdui-card mdui-col-xs-10 mdui-hoverable mdui-p-l-0 mdui-p-r-0" style="border-radius: 5px">
         <a target="_blank" href={{ friend["link"] }}>
             <div class="mdui-card-media avatarDiv">
@@ -55,6 +54,27 @@
 
         </div>
     {% endfor %}
+    {% if current_user.is_authenticated %}
+    <div class="mdui-col mdui-m-b-3 mdui-p-l-0 mdui-p-r-0">
+        <div class="mdui-col-xs-1 "></div>
+        <div class="mdui-card mdui-col-xs-10 mdui-hoverable mdui-p-l-0 mdui-p-r-0" style="border-radius: 5px">
+        <a target="_blank" href={{ url_for("add") }}>
+            <div class="mdui-card-media">
+                <img alt="avatar" class="mdui-img-fluid" src={{ url_for("get_file", filename="unknown.png") }}>
+            </div></a>
+            <div class="mdui-card-primary mdui-p-t-1 mdui-p-b-2 mdui-p-l-1 mdui-p-r-1">
+                <div class="mdui-card-primary-title mdui-text-truncate mdui-text-center"><small><small>添加新伙伴(｡･∀･)ﾉﾞ</small></small></div>
+                <div class="mdui-card-primary-subtitle mdui-text-truncate mdui-text-center"><small>↓↓↓戳这个↓↓↓</small></div>
+            </div>
+
+            {% if current_user.is_authenticated  %}
+            <div class="mdui-card-actions">
+            <form method="get" action={{ url_for("add") }}>
+                <button type="submit" name="add" value="add" class="mdui-btn mdui-ripple mdui-btn-block">ADD</button></form>
+            {% endif %}
+    {% endif %}
+    </div>
+    </div>
     </div>
     </div>
     </div>
