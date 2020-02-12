@@ -36,6 +36,22 @@ app.config['SECRET_KEY'] = os.getenv('SECRET_KEY', 'dev')
 app.config['MAX_CONTENT_LENGTH'] = 5 * 1024 * 1024 # 文件的最大大小
 app.config['UPLOAD_PATH'] = os.path.join(app.static_folder, 'uploads')
 
+# 注册日志
+import logging
+from logging.handlers import RotatingFileHandler
+
+
+def register_logger():
+    app.logger.setLievel(logging.INFO)
+
+    formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+    file_handler = RotatingFileHandler('Logs/friendlink.log', maxBytes=10 * 1024 * 1024, backupCount=10)
+    file_handler.setFormatter(formatter)
+    file_handler.setLevel(logging.INFO)
+
+    if not app.debug:
+        app.logger.addHandler(file_handler)
+
 
 from friendLink import command, view, form
 if __name__ == '__main__':

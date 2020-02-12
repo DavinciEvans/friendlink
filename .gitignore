@@ -6,3 +6,6 @@ venv/
 
 .idea/
 *.db
+
+*.log
+.env
