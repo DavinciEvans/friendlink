@@ -14,9 +14,12 @@
     <div class="mdui-textfield">
         {% set name_value = friend.name %}
         {% set motto_value = friend.motto %}
+        {% set link_value = friend.link %}
         {{ form.name.label(class="mdui-textfield-label") }}{{ form.name(class="mdui-textfield-input", value=name_value) }}<br></div>
     <div class="mdui-textfield">
     {{ form.motto.label(class="mdui-textfield-label") }}{{ form.motto(class="mdui-textfield-input", value=motto_value) }}<br></div>
+    <div class="mdui-textfield">
+    {{ form.link.label(class="mdui-textfield-label") }}{{ form.link(class="mdui-textfield-input", value=link_value) }}<br></div>
     {{ form.submit(class="mdui-btn mdui-color-theme-accent mdui-ripple mdui-m-b-5") }}<br>
     </form>
 </div>

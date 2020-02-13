@@ -63,6 +63,7 @@ def edit(id):
         avatar = form.avatar.data
         name = form.name.data
         motto = form.motto.data
+        link = form.link.data
         if avatar:
             filename = random_name(avatar.filename)
             avatar_path = os.path.join(app.config['UPLOAD_PATH'], filename)
@@ -70,6 +71,7 @@ def edit(id):
             friend.avatar = url_for("get_file", filename=filename)
         friend.name = name
         friend.motto = motto
+        friend.link = link
         db.session.commit()
         flash("数据已更新！")
         return redirect(url_for("index"))
@@ -95,11 +97,12 @@ def add():
         avatar = form.avatar.data
         name = form.name.data
         motto = form.motto.data
+        link = form.link.data
         filename = random_name(avatar.filename)
         avatar_path = os.path.join(app.config['UPLOAD_PATH'], filename)
         avatar.save(avatar_path)
         avatar_url = url_for("get_file", filename=filename)
-        new_friend = Friend(avatar=avatar_url,name=name,motto=motto)
+        new_friend = Friend(avatar=avatar_url,name=name,motto=motto, link = link)
         db.session.add(new_friend)
         db.session.commit()
         flash("成功添加新朋友！")
