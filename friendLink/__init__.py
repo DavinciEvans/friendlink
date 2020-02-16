@@ -6,6 +6,16 @@ from flask_login import LoginManager
 
 
 app = Flask(__name__)
+WIN = sys.platform.startswith('win')  # 检测是否为windows
+if WIN:  # 如果是 Windows 系统，使用三个斜线
+    prefix = 'sqlite:///'
+else:  # 否则使用四个斜线
+    prefix = 'sqlite:////'
+app.config['SQLALCHEMY_DATABASE_URI'] = prefix + os.path.join(os.path.dirname(app.root_path), os.getenv('DATABASE_FILE', 'data.db'))
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False  # 关闭对模型修改的监控，提高性能，官方推荐关闭
+app.config['SECRET_KEY'] = os.getenv('SECRET_KEY', 'dev')
+app.config['MAX_CONTENT_LENGTH'] = 5 * 1024 * 1024 # 文件的最大大小
+app.config['UPLOAD_PATH'] = os.path.join(app.static_folder, 'uploads')
 db = SQLAlchemy(app)
 login_manager = LoginManager(app)
 login_manager.login_view = 'login'
@@ -24,17 +34,6 @@ def load_user(user_id):  # 用户加载回调函数
     user = User.query.get(int(user_id))
     return user
 
-
-WIN = sys.platform.startswith('win')  # 检测是否为windows
-if WIN:  # 如果是 Windows 系统，使用三个斜线
-    prefix = 'sqlite:///'
-else:  # 否则使用四个斜线
-    prefix = 'sqlite:////'
-app.config['SQLALCHEMY_DATABASE_URI'] = prefix + os.path.join(os.path.dirname(app.root_path), os.getenv('DATABASE_FILE', 'data.db'))
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False  # 关闭对模型修改的监控，提高性能，官方推荐关闭
-app.config['SECRET_KEY'] = os.getenv('SECRET_KEY', 'dev')
-app.config['MAX_CONTENT_LENGTH'] = 5 * 1024 * 1024 # 文件的最大大小
-app.config['UPLOAD_PATH'] = os.path.join(app.static_folder, 'uploads')
 
 # 注册日志
 import logging
