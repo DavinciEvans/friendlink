@@ -3,9 +3,12 @@ import sys
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
+from dotenv import load_dotenv
 
-
+load_dotenv(dotenv_path='.flaskenv')
+load_dotenv(dotenv_path='.env')
 app = Flask(__name__)
+app.config['FLASK_ENV'] = os.getenv('FLASK_ENV', 'production')
 WIN = sys.platform.startswith('win')  # 检测是否为windows
 if WIN:  # 如果是 Windows 系统，使用三个斜线
     prefix = 'sqlite:///'
@@ -13,7 +16,17 @@ else:  # 否则使用四个斜线
     prefix = 'sqlite:////'
 app.config['SQLALCHEMY_DATABASE_URI'] = prefix + os.path.join(os.path.dirname(app.root_path), os.getenv('DATABASE_FILE', 'data.db'))
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False  # 关闭对模型修改的监控，提高性能，官方推荐关闭
-app.config['SECRET_KEY'] = os.getenv('SECRET_KEY', 'dev')
+if os.getenv('SECRET_KEY'):
+    app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
+else:
+    class NoSecretKeyError(Exception):
+        def __init__(self, ErrorInfo):
+            super().__init__(self)  # 初始化父类
+            self.errorinfo = ErrorInfo
+
+        def __str__(self):
+            return self.errorinfo
+    raise NoSecretKeyError("未输入初始化密钥！")
 app.config['MAX_CONTENT_LENGTH'] = 5 * 1024 * 1024 # 文件的最大大小
 app.config['UPLOAD_PATH'] = os.path.join(app.static_folder, 'uploads')
 db = SQLAlchemy(app)
